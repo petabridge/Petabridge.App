@@ -35,7 +35,7 @@ $DotNetVersion = "3.0.100";
 $DotNetInstallerUri = "https://dot.net/v1/dotnet-install.ps1";
 $NugetVersion = "4.1.0";
 $NugetUrl = "https://dist.nuget.org/win-x86-commandline/v$NugetVersion/nuget.exe"
-$ProtobufVersion = "3.4.0"
+$ProtobufVersion = "3.9.2"
 $DocfxVersion = "2.40.5"
 
 # Make sure tools folder exists
@@ -128,6 +128,22 @@ if (!(Test-Path $DocfxExePath)) {
         Throw "An error occured while restoring docfx.console from NuGet."
     }
 }
+
+
+###########################################################################
+# Google.Protobuf.Tools
+###########################################################################
+
+# Make sure Google.Protobuf.Tools has been installed.
+$ProtobufExePath = Join-Path $ToolPath "Google.Protobuf.Tools/tools/windows_x64/protoc.exe"
+if (!(Test-Path $ProtobufExePath)) {
+    Write-Host "Installing Google.Protobuf.Tools..."
+    Invoke-Expression "&`"$NugetPath`" install Google.Protobuf.Tools -ExcludeVersion -Version $ProtobufVersion -OutputDirectory `"$ToolPath`"" | Out-Null;
+    if ($LASTEXITCODE -ne 0) {
+        Throw "An error occured while restoring Google.Protobuf.Tools from NuGet."
+    }
+}
+
 
 ###########################################################################
 # SignTool
