@@ -1,8 +1,8 @@
 {
   "author": "Petabridge",
   "classifications": [ "Petabridge", "DocFx", "Tests" ],
-  "name": "Petabridge Akka.Cluster Starter",
-  "identity": "Petabridge.Akka.Cluster.App", 
+  "name": "Petabridge Akka.Cluster Starter App",
+  "identity": "Petabridge.App", 
   "description": "A professional .NET Core project setup including build scripts, documentation, unit tests, and performance tests for an Akka.Cluster .NET Core project.",
   "shortName": "pb-akka-cluster",              
   "groupIdentity": "Petabridge",
