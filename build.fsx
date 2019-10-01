@@ -305,6 +305,9 @@ Target "BuildDockerImages" (fun _ ->
 
     let remoteRegistryUrl = getBuildParamOrDefault "remoteRegistry" ""
 
+    let composedGetFileNameWithoutExtension (p:string) =
+        System.IO.Path.GetFileNameWithoutExtension p
+
     let buildDockerImage imageName projectPath =
         
         let args = 
@@ -334,13 +337,14 @@ Target "BuildDockerImages" (fun _ ->
         let composedGetDirName (p:string) =
             System.IO.Path.GetDirectoryName p
 
+
         ExecProcess(fun info -> 
                 info.FileName <- "docker"
                 info.WorkingDirectory <- composedGetDirName projectPath
                 info.Arguments <- args) (System.TimeSpan.FromMinutes 5.0) (* Reasonably long-running task. *)
 
     let runSingleProject project =
-        let projectName = Path.GetFileNameWithoutExtension project
+        let projectName = composedGetFileNameWithoutExtension project
         let imageName = mapDockerImageName projectName
         let result = match imageName with
                         | None -> 0
