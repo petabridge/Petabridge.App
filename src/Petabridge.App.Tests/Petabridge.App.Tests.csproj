@@ -9,10 +9,12 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="$(TestSdkVersion)" />
     <PackageReference Include="xunit" Version="$(XunitVersion)" />
     <PackageReference Include="xunit.runner.visualstudio" Version="$(XunitVersion)" />
+    <PackageReference Include="Akka.TestKit.XUnit2" Version="$(AkkaVersion)" />
+    <PackageReference Include="FluentAssertions" Version="$(FluentAssertionsVersion)" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Petabridge.Library\Petabridge.Library.csproj" />
+    <ProjectReference Include="..\Petabridge.App\Petabridge.App.csproj" />
   </ItemGroup>
 
 </Project>
