@@ -3,7 +3,7 @@
 
 
   <PropertyGroup>
-    <TargetFramework>$(LibraryFramework)</TargetFramework>
+    <TargetFramework>$(AppNetCoreFramework)</TargetFramework>
     <OutputType>Exe</OutputType>
   </PropertyGroup>
 
