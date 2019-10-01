@@ -2,7 +2,8 @@
 
 namespace Petabridge.Library
 {
-    public class Class1
+     public async Task Main(string[] args)
     {
+       
     }
 }
