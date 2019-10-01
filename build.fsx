@@ -257,8 +257,6 @@ Target "PublishCode" (fun _ ->
                 { p with
                     Project = project
                     Configuration = configuration
-                    VersionSuffix = overrideVersionSuffix project
-                    AdditionalArgs = ["--no-restore --output bin/Release/netcoreapp3.0/publish"] // would be ideal to change publish dir via MSBuild
                     })
 
     projects|> Seq.iter (runSingleProject)
@@ -375,6 +373,7 @@ Target "Help" <| fun _ ->
 
 Target "BuildRelease" DoNothing
 Target "All" DoNothing
+Target "Docker" DoNothing
 Target "Nuget" DoNothing
 
 // build dependencies
@@ -389,6 +388,9 @@ Target "Nuget" DoNothing
 
 // docs
 "Clean" ==> "BuildRelease" ==> "Docfx"
+
+// Docker
+"BuildRelease" ==> "PublishCode" ==> "BuildDockerImages" ==> "Docker"
 
 // all
 "BuildRelease" ==> "All"
