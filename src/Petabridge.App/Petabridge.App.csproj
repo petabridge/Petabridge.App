@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\common.props" />
 
 
@@ -6,6 +6,18 @@
     <TargetFramework>$(AppNetCoreFramework)</TargetFramework>
     <OutputType>Exe</OutputType>
   </PropertyGroup>
+
+
+  <ItemGroup>
+    <None Remove="app.conf" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Content Include="app.conf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Akka.Cluster" Version="$(AkkaVersion)" />
