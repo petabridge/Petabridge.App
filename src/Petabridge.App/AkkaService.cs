@@ -47,7 +47,7 @@ namespace Petabridge.App
             // start Petabridge.Cmd (https://cmd.petabridge.com/)
             var pbm = PetabridgeCmd.Get(ClusterSystem);
             pbm.RegisterCommandPalette(ClusterCommands.Instance);
-            pbm.RegisterCommandPalette(RemoteCommands.Instance);
+            pbm.RegisterCommandPalette(new RemoteCommands());
             pbm.Start(); // begin listening for PBM management commands
 
             // instantiate actors
