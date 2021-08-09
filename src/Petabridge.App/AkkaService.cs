@@ -36,7 +36,7 @@ namespace Petabridge.App
             // N.B. `WithActorRefProvider` isn't actually needed here - the HOCON file already specifies Akka.Cluster
 
             // enable DI support inside this ActorSystem, if needed
-            var diSetup = ServiceProviderSetup.Create(_serviceProvider);
+            var diSetup = DependencyResolverSetup.Create(_serviceProvider);
 
             // merge this setup (and any others) together into ActorSystemSetup
             var actorSystemSetup = bootstrap.And(diSetup);
@@ -53,7 +53,7 @@ namespace Petabridge.App
             // instantiate actors
 
             // use the ServiceProvider ActorSystem Extension to start DI'd actors
-            var sp = ServiceProvider.For(ClusterSystem);
+            var sp = DependencyResolver.For(ClusterSystem);
             
             return Task.CompletedTask;
         }
