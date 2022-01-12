@@ -21,9 +21,11 @@ namespace Petabridge.App
         private ActorSystem ClusterSystem;
         private readonly IServiceProvider _serviceProvider;
 
-        public AkkaService(IServiceProvider serviceProvider)
+        private readonly IHostApplicationLifetime _applicationLifetime;
+        public AkkaService(IServiceProvider serviceProvider, IHostApplicationLifetime appLifetime)
         {
             _serviceProvider = serviceProvider;
+            _applicationLifetime = appLifetime;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -54,7 +56,12 @@ namespace Petabridge.App
 
             // use the ServiceProvider ActorSystem Extension to start DI'd actors
             var sp = DependencyResolver.For(ClusterSystem);
-            
+            // add a continuation task that will guarantee 
+            // shutdown of application if ActorSystem terminates first
+            ClusterSystem.WhenTerminated.ContinueWith(tr => {
+                _applicationLifetime.StopApplication();
+            });
+
             return Task.CompletedTask;
         }
 
