@@ -3,11 +3,13 @@
 
   <PropertyGroup>
     <TargetFramework>$(NetCoreFramework)</TargetFramework>
+	<PackageReadmeFile>README.md</PackageReadmeFile>
     <OutputType>Exe</OutputType>
   </PropertyGroup>
 
 
   <ItemGroup>
+	<None Include="..\..\README.md" Pack="true" PackagePath="\" />
     <None Remove="app.conf" />
   </ItemGroup>
 
