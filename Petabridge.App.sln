@@ -7,12 +7,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Petabridge.App", "src\Petab
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Petabridge.App.Tests", "src\Petabridge.App.Tests\Petabridge.App.Tests.csproj", "{C3E29605-EB45-4ACC-9A38-9A885D06847B}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{89D844A7-EFDD-4546-95F9-FF435E483427}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{89D844A7-EFDD-4546-95F9-FF435E483427}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89D844A7-EFDD-4546-95F9-FF435E483427}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8E7E573-2F8D-4D56-B33E-9770BEE62DEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B8E7E573-2F8D-4D56-B33E-9770BEE62DEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8E7E573-2F8D-4D56-B33E-9770BEE62DEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
