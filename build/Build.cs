@@ -45,8 +45,6 @@ partial class Build : NukeBuild
 
     [Parameter("The final release branch")]
     readonly string ReleaseBranch = "master";
-
-    [Solution] readonly Solution Solution;
     [GitRepository] readonly GitRepository GitRepository;
     [GitVersion(Framework = "net6.0")] readonly GitVersion GitVersion;
 
@@ -68,6 +66,8 @@ partial class Build : NukeBuild
 
     [Parameter] [Secret] string SignClientSecret;
     [Parameter] [Secret] string SignClientUser;
+
+    [Parameter] int Port = 8090;
     // Directories
     AbsolutePath ToolsDir => RootDirectory / "tools";
     AbsolutePath Output => RootDirectory / "bin";
@@ -79,6 +79,8 @@ partial class Build : NukeBuild
     public string ChangelogFile => RootDirectory / "CHANGELOG.md";
     public AbsolutePath DocFxDir => RootDirectory / "docs";
     public AbsolutePath DocFxDirJson => DocFxDir / "docfx.json";
+
+    readonly Solution Solution = ProjectModelTasks.ParseSolution(RootDirectory.GlobFiles("*.sln").FirstOrDefault());
 
     static readonly JsonElement? _githubContext = string.IsNullOrWhiteSpace(EnvironmentInfo.GetVariable<string>("GITHUB_CONTEXT")) ?
         null
@@ -398,7 +400,7 @@ partial class Build : NukeBuild
 
     Target ServeDocs => _ => _
         .Description("Build and preview documentation")
-        .Executes(() => DocFXServe(s=>s.SetFolder(DocFxDir)));
+        .Executes(() => DocFXServe(s=>s.SetFolder(DocFxDir).SetPort(Port)));
 
     Target Compile => _ => _
         .Description("Builds all the projects in the solution")

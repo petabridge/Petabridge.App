@@ -64,6 +64,9 @@
         "NugetPublishUrl": {
           "type": "string"
         },
+        "P": {
+          "type": "integer"
+        },
         "Partition": {
           "type": "string",
           "description": "Partition to use on CI"
@@ -135,10 +138,6 @@
               "Tests"
             ]
           }
-        },
-        "Solution": {
-          "type": "string",
-          "description": "Path to a solution file that is automatically loaded"
         },
         "SymbolsPublishUrl": {
           "type": "string"
