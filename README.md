@@ -1,5 +1,5 @@
-﻿# Petabridge.App.Web
-
+﻿# Petabridge.App
+ 
 Update this readme file with your details.
 
 # The Build System
@@ -178,7 +178,7 @@ If I changed my current branch to:
 `build.cmd nuget` will check if current branch matches the `ReleaseBranch`. If it does, it will check if the `ChangeLog.md` has the `next-version`, if not it fails. Execute the following command to update `RunChangeLog.md` when you are ready to create final release: `build.cmd runchangelog`.
 
 ### Deployment
-Petabridge.App.Web uses Docker for deployment - to create Docker images for this project, please run the following command:
+Petabridge.App uses Docker for deployment - to create Docker images for this project, please run the following command:
 
 ```
 build.cmd buildImage
