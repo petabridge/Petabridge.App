@@ -61,11 +61,11 @@
           "type": "string",
           "default": "Secrets must be entered via 'nuke :secret [profile]'"
         },
-        "NugetPublishUrl": {
+        "NugetPrerelease": {
           "type": "string"
         },
-        "P": {
-          "type": "integer"
+        "NugetPublishUrl": {
+          "type": "string"
         },
         "Partition": {
           "type": "string",
@@ -75,16 +75,15 @@
           "type": "boolean",
           "description": "Shows the execution plan (HTML)"
         },
+        "Port": {
+          "type": "integer"
+        },
         "Profile": {
           "type": "array",
           "description": "Defines the profiles to load",
           "items": {
             "type": "string"
           }
-        },
-        "ReleaseBranch": {
-          "type": "string",
-          "description": "The final release branch"
         },
         "Root": {
           "type": "string",
@@ -114,12 +113,15 @@
             "type": "string",
             "enum": [
               "All",
-              "BuildAndPush",
+              "AssemblyInfo",
               "BuildAndServeDocs",
-              "BuildImage",
+              "BuildDockerImages",
+              "BuildRelease",
               "Clean",
               "Compile",
+              "CreateNuget",
               "DocFxBuild",
+              "Docker",
               "DockerLogin",
               "DocsInit",
               "DocsMetadata",
@@ -130,12 +132,10 @@
               "PublishNuget",
               "PushImage",
               "Restore",
-              "RunChangelog",
+              "RunTests",
               "ServeDocs",
-              "SignAndPublishPackage",
               "SignClient",
-              "SignPackages",
-              "Tests"
+              "SignPackages"
             ]
           }
         },
@@ -149,12 +149,15 @@
             "type": "string",
             "enum": [
               "All",
-              "BuildAndPush",
+              "AssemblyInfo",
               "BuildAndServeDocs",
-              "BuildImage",
+              "BuildDockerImages",
+              "BuildRelease",
               "Clean",
               "Compile",
+              "CreateNuget",
               "DocFxBuild",
+              "Docker",
               "DockerLogin",
               "DocsInit",
               "DocsMetadata",
@@ -165,12 +168,10 @@
               "PublishNuget",
               "PushImage",
               "Restore",
-              "RunChangelog",
+              "RunTests",
               "ServeDocs",
-              "SignAndPublishPackage",
               "SignClient",
-              "SignPackages",
-              "Tests"
+              "SignPackages"
             ]
           }
         },

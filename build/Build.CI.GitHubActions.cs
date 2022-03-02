@@ -15,35 +15,27 @@ using Nuke.Common.Utilities;
     AutoGenerate = true,
     OnPushBranches = new[] { "master", "dev" },
     OnPullRequestBranches = new[] { "master", "dev" },
-    CacheKeyFiles = new[] { "global.json", "src/**/*.csproj" },
-    InvokedTargets = new[] { nameof(Tests) },
-    //causes the on push to not trigger - maybe path-ignore is the right approach!
-    //OnPushExcludePaths = new[] { "docs/**/*", "package.json", "README.md" },
-    PublishArtifacts = false,
+    InvokedTargets = new[] { nameof(RunTests) },
+    PublishArtifacts = true,
     EnableGitHubContext = true)
 ]
 
-[CustomGitHubActions("Docker_build",
+[CustomGitHubActions("docker_build",
     GitHubActionsImage.UbuntuLatest,
     AutoGenerate = true,
     OnPushBranches = new[] { "master", "dev" },
     OnPullRequestBranches = new[] { "master", "dev" },
-    CacheKeyFiles = new[] { "global.json", "src/**/*.csproj" },
-    InvokedTargets = new[] { nameof(BuildImage) },
-    ImportSecrets = new [] { "Docker_Username", "Docker_Password" },
-    //causes the on push to not trigger - maybe path-ignore is the right approach!
-    //OnPushExcludePaths = new[] { "docs/**/*", "package.json", "README.md" },
+    InvokedTargets = new[] { nameof(Docker) },
+    PublishArtifacts = true,
     EnableGitHubContext = true)
 ]
-[CustomGitHubActions("Windows_release",
+[CustomGitHubActions("windows_release",
     GitHubActionsImage.WindowsLatest,
     AutoGenerate = true,
     OnPushBranches = new[] { "refs/tags/*" },
-    CacheKeyFiles = new[] { "global.json", "src/**/*.csproj" },
-    InvokedTargets = new[] { nameof(BuildImage) },
-    ImportSecrets = new[] { "Nuget_Key" },
-    //causes the on push to not trigger - maybe path-ignore is the right approach!
-    //OnPushExcludePaths = new[] { "docs/**/*", "package.json", "README.md" },
+    InvokedTargets = new[] { nameof(NuGet) },
+    ImportSecrets = new[] { "Nuget_Key" }, 
+    PublishArtifacts = true,
     EnableGitHubContext = true)
 ]
 
