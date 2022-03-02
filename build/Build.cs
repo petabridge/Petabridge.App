@@ -144,7 +144,6 @@ partial class Build : NukeBuild
       });
     Target DockerLogin => _ => _
         .Description("Docker login command")
-        .Before(PushImage)
         .Requires(() => !DockerRegistryUrl.IsNullOrEmpty())
         .Requires(() => !DockerPassword.IsNullOrEmpty())
         .Requires(() => !DockerUsername.IsNullOrEmpty())
@@ -186,7 +185,6 @@ partial class Build : NukeBuild
         });
     Target PushImage => _ => _
         .Description("Push image to docker registry")
-        .DependsOn(DockerLogin)
         .Executes(() =>
         {
             var version = ReleaseNotes.Version;
@@ -203,6 +201,9 @@ partial class Build : NukeBuild
 
     public Target Docker => _ => _
     .DependsOn(BuildDockerImages);
+
+    public Target PublishDockerImages => _ => _
+    .DependsOn(DockerLogin, Docker, PushImage);
 
     Target PublishNuget => _ => _
     .Description("Publishes .nuget packages to Nuget")
