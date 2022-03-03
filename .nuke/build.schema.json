@@ -114,13 +114,12 @@
             "enum": [
               "All",
               "AssemblyInfo",
-              "BuildAndServeDocs",
               "BuildDockerImages",
               "BuildRelease",
               "Clean",
               "Compile",
               "CreateNuget",
-              "DocFxBuild",
+              "DocFx",
               "Docker",
               "DockerLogin",
               "DocsInit",
@@ -129,13 +128,13 @@
               "NBench",
               "Nuget",
               "PublishCode",
+              "PublishDockerImages",
               "PublishNuget",
               "PushImage",
               "Restore",
               "RunTests",
               "ServeDocs",
-              "SignClient",
-              "SignPackages"
+              "SignClient"
             ]
           }
         },
@@ -150,13 +149,12 @@
             "enum": [
               "All",
               "AssemblyInfo",
-              "BuildAndServeDocs",
               "BuildDockerImages",
               "BuildRelease",
               "Clean",
               "Compile",
               "CreateNuget",
-              "DocFxBuild",
+              "DocFx",
               "Docker",
               "DockerLogin",
               "DocsInit",
@@ -165,13 +163,13 @@
               "NBench",
               "Nuget",
               "PublishCode",
+              "PublishDockerImages",
               "PublishNuget",
               "PushImage",
               "Restore",
               "RunTests",
               "ServeDocs",
-              "SignClient",
-              "SignPackages"
+              "SignClient"
             ]
           }
         },

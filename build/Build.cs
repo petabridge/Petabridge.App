@@ -57,7 +57,7 @@ partial class Build : NukeBuild
     [Parameter] string SigningDescription = "My REALLY COOL Library";
     [Parameter] string SigningUrl = "https://signing.is.cool/";
 
-    
+
     [Parameter] [Secret] string DockerUsername;
     [Parameter] [Secret] string DockerPassword;
 
@@ -113,7 +113,7 @@ partial class Build : NukeBuild
             DotNetRestore(s => s
                 .SetProjectFile(Solution));
         });
-    
+
     Target CreateNuget => _ => _
       .Description("Creates nuget packages")
       .DependsOn(RunTests)
@@ -153,7 +153,7 @@ partial class Build : NukeBuild
                 .SetServer(DockerRegistryUrl)
                 .SetUsername(DockerUsername)
                 .SetPassword(DockerPassword);
-            DockerTasks.DockerLogin(settings);  
+            DockerTasks.DockerLogin(settings);
         });
     Target BuildDockerImages => _ => _
         .Description("Build docker image")
@@ -181,7 +181,7 @@ partial class Build : NukeBuild
                  .SetPath(Directory.GetParent(dockfile).FullName)
                  .SetTag(tags.ToArray());
                 DockerTasks.DockerBuild(settings);
-            }            
+            }
         });
     Target PushImage => _ => _
         .Description("Push image to docker registry")
@@ -206,9 +206,11 @@ partial class Build : NukeBuild
     .DependsOn(DockerLogin, Docker, PushImage);
 
     Target PublishNuget => _ => _
+    .Unlisted()
     .Description("Publishes .nuget packages to Nuget")
-    .Requires(() => NugetPublishUrl)
-    .Requires(() => !NugetKey.IsNullOrEmpty())
+    .After(CreateNuget, SignClient)
+    .OnlyWhenDynamic(() => !NugetPublishUrl.IsNullOrEmpty())
+    .OnlyWhenDynamic(() => !NugetKey.IsNullOrEmpty())
     .Executes(() =>
     {
         var packages = OutputNuget.GlobFiles("*.nupkg", "*.symbols.nupkg").NotNull();
@@ -265,8 +267,9 @@ partial class Build : NukeBuild
     Target SignClient => _ => _
         .Unlisted()
         .Before(PublishNuget)
-        .Requires(() => !SignClientSecret.IsNullOrEmpty())
-        .Requires(() => !SignClientUser.IsNullOrEmpty())
+        .After(CreateNuget)
+        .OnlyWhenDynamic(() => !SignClientSecret.IsNullOrEmpty())
+        .OnlyWhenDynamic(() => !SignClientUser.IsNullOrEmpty())
         .Executes(() =>
         {
             var assemblies = OutputNuget.GlobFiles("*.nupkg");
@@ -288,11 +291,9 @@ partial class Build : NukeBuild
                 //SignClient(stringBuilder.ToString(), workingDirectory: RootDirectory, timeout: TimeSpan.FromMinutes(5).Minutes);
             }
         });
-   
-    Target SignPackages => _ => _
-    .DependsOn(CreateNuget, SignClient);
+
     Target Nuget => _ => _
-        .DependsOn(SignPackages, PublishNuget);
+        .DependsOn(CreateNuget, SignClient, PublishNuget);
     private AbsolutePath[] GetDockerProjects()
     {
         return SourceDirectory.GlobFiles("**/Dockerfile")// folders with Dockerfiles in it
@@ -305,18 +306,18 @@ partial class Build : NukeBuild
         .Executes(() =>
         {
             var dockfiles = GetDockerProjects();
-            foreach(var dockfile in dockfiles)
+            foreach (var dockfile in dockfiles)
             {
                 Information(dockfile.Parent.ToString());
                 var project = dockfile.Parent.GlobFiles("*.csproj").First();
                 DotNetPublish(s => s
                 .SetProject(project)
                 .SetConfiguration(Configuration.Release));
-            }            
+            }
         });
-   Target All => _ => _
-    .Description("Executes NBench, Tests and Nuget targets/commands")
-    .DependsOn(BuildRelease, RunTests, NBench, Nuget);
+    Target All => _ => _
+     .Description("Executes NBench, Tests and Nuget targets/commands")
+     .DependsOn(BuildRelease, RunTests, NBench, Nuget);
 
     Target NBench => _ => _
     .Description("Runs all BenchMarkDotNet tests")
@@ -349,29 +350,27 @@ partial class Build : NukeBuild
         .Unlisted()
         .Description("Create DocFx metadata")
         .DependsOn(Compile)
-        .Executes(() => 
+        .Executes(() =>
         {
             DocFXMetadata(s => s
             .SetProjects(DocFxDirJson)
             .SetLogLevel(DocFXLogLevel.Verbose));
         });
 
-    Target DocFxBuild => _ => _
+    Target DocFx => _ => _
         .Description("Builds Documentation")
         .DependsOn(DocsMetadata)
-        .Executes(() => 
+        .Executes(() =>
         {
             DocFXBuild(s => s
             .SetConfigFile(DocFxDirJson)
             .SetLogLevel(DocFXLogLevel.Verbose));
         });
 
-    Target BuildAndServeDocs => _ => _
-    .DependsOn(DocFxBuild, ServeDocs);
-
     Target ServeDocs => _ => _
-        .Description("Build and preview documentation")
-        .Executes(() => DocFXServe(s=>s.SetFolder(DocFxDir).SetPort(Port)));
+         .Description("Build and preview documentation")
+         .DependsOn(DocFx)
+         .Executes(() => DocFXServe(s => s.SetFolder(DocFxDir).SetPort(Port)));
 
     Target Compile => _ => _
         .Description("Builds all the projects in the solution")
@@ -407,7 +406,7 @@ partial class Build : NukeBuild
             DotNet($@"dotnet tool install SignClient --version 1.3.155 --tool-path ""{ToolsDir}"" ");
             DotNet($"tool install Nuke.GlobalTool --global");
         });
-   
+
     static void Information(string info)
     {
         Serilog.Log.Information(info);
