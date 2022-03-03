@@ -9,12 +9,12 @@
 #
 #     - To trigger manual generation invoke:
 #
-#         nuke --generate-configuration GitHubActions_Docker_build --host GitHubActions
+#         nuke --generate-configuration GitHubActions_docker_build --host GitHubActions
 #
 # </auto-generated>
 # ------------------------------------------------------------------------------
 
-name: Docker_build
+name: docker_build
 
 on:
   push:
@@ -44,10 +44,8 @@ jobs:
           path: |
             .nuke/temp
             ~/.nuget/packages
-          key: ${{ runner.os }}-${{ hashFiles('global.json', 'src/**/*.csproj') }}
-      - name: Run './build.cmd BuildImage'
-        run: ./build.cmd BuildImage
+          key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj') }}
+      - name: Run './build.cmd Docker'
+        run: ./build.cmd Docker
         env:
-          Docker_Username: ${{ secrets.DOCKER_USERNAME }}
-          Docker_Password: ${{ secrets.DOCKER_PASSWORD }}
           GITHUB_CONTEXT: ${{ toJSON(github) }}
