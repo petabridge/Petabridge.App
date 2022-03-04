@@ -16,12 +16,12 @@ using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using static Nuke.Common.Tools.DocFX.DocFXTasks;
 using System.Text.Json;
 using System.IO;
+using static Nuke.Common.Tools.Git.GitTasks;
 using static Nuke.Common.ChangeLog.ChangelogTasks;
 using Nuke.Common.ChangeLog;
 using System.Collections.Generic;
 using Nuke.Common.Tools.DocFX;
 using Nuke.Common.Tools.Docker;
-using static Nuke.Common.Tools.SignClient.SignClientTasks;
 using Nuke.Common.Tools.SignClient;
 
 [CheckBuildProjectConfigurations]
@@ -372,11 +372,18 @@ partial class Build : NukeBuild
 
         });
 
+
+    Target SetFilePermission => _ => _
+    .Description("User may experience PERMISSION issues - this target be used to fix that!")
+    .Executes(() =>
+    {
+        Git($"update-index --chmod=+x {RootDirectory}/build.cmd");
+        Git($"update-index --chmod=+x {RootDirectory}/build.sh");
+    });
     Target Install => _ => _
         .Description("Install `Nuke.GlobalTool` and SignClient")
         .Executes(() =>
         {
-            DotNet($@"dotnet tool install SignClient --version 1.3.155 --tool-path ""{ToolsDir}"" ");
             DotNet($"tool install Nuke.GlobalTool --global");
         });
 
