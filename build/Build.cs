@@ -208,7 +208,7 @@ partial class Build : NukeBuild
     Target PublishNuget => _ => _
     .Unlisted()
     .Description("Publishes .nuget packages to Nuget")
-    .After(CreateNuget, SignClient)
+    .After(CreateNuget)
     .OnlyWhenDynamic(() => !NugetPublishUrl.IsNullOrEmpty())
     .OnlyWhenDynamic(() => !NugetKey.IsNullOrEmpty())
     .Executes(() =>
@@ -264,36 +264,9 @@ partial class Build : NukeBuild
                 }
             }
         });
-    Target SignClient => _ => _
-        .Unlisted()
-        .Before(PublishNuget)
-        .After(CreateNuget)
-        .OnlyWhenDynamic(() => !SignClientSecret.IsNullOrEmpty())
-        .OnlyWhenDynamic(() => !SignClientUser.IsNullOrEmpty())
-        .Executes(() =>
-        {
-            var assemblies = OutputNuget.GlobFiles("*.nupkg");
-            foreach (var asm in assemblies)
-            {
-                SignClientSign(s => s
-                .SetProcessToolPath(ToolsDir / "SignClient.exe")
-                .SetProcessLogOutput(true)
-                .SetConfig(RootDirectory / "appsettings.json")
-                .SetDescription(SigningDescription)
-                .SetDescriptionUrl(SigningUrl)
-                .SetInput(asm)
-                .SetName(SigningName)
-                .SetSecret(SignClientSecret)
-                .SetUsername(SignClientUser)
-                .SetProcessWorkingDirectory(RootDirectory)
-                .SetProcessExecutionTimeout(TimeSpan.FromMinutes(5).Minutes));
-
-                //SignClient(stringBuilder.ToString(), workingDirectory: RootDirectory, timeout: TimeSpan.FromMinutes(5).Minutes);
-            }
-        });
 
     Target Nuget => _ => _
-        .DependsOn(CreateNuget, SignClient, PublishNuget);
+        .DependsOn(CreateNuget, PublishNuget);
     private AbsolutePath[] GetDockerProjects()
     {
         return SourceDirectory.GlobFiles("**/Dockerfile")// folders with Dockerfiles in it
