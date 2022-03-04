@@ -134,7 +134,7 @@
               "Restore",
               "RunTests",
               "ServeDocs",
-              "SignClient"
+              "SetFilePermission"
             ]
           }
         },
@@ -169,7 +169,7 @@
               "Restore",
               "RunTests",
               "ServeDocs",
-              "SignClient"
+              "SetFilePermission"
             ]
           }
         },
