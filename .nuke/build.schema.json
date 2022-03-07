@@ -133,8 +133,7 @@
               "PushImage",
               "Restore",
               "RunTests",
-              "ServeDocs",
-              "SetFilePermission"
+              "ServeDocs"
             ]
           }
         },
@@ -168,8 +167,7 @@
               "PushImage",
               "Restore",
               "RunTests",
-              "ServeDocs",
-              "SetFilePermission"
+              "ServeDocs"
             ]
           }
         },
