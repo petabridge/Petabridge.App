@@ -372,14 +372,6 @@ partial class Build : NukeBuild
 
         });
 
-
-    Target SetFilePermission => _ => _
-    .Description("User may experience PERMISSION issues - this target be used to fix that!")
-    .Executes(() =>
-    {
-        Git($"update-index --chmod=+x {RootDirectory}/build.cmd");
-        Git($"update-index --chmod=+x {RootDirectory}/build.sh");
-    });
     Target Install => _ => _
         .Description("Install `Nuke.GlobalTool` and SignClient")
         .Executes(() =>
