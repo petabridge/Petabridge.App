@@ -354,7 +354,7 @@ partial class Build : NukeBuild
             DotNetBuild(s => s
                 .SetProjectFile(Solution)
                 .SetConfiguration(Configuration)
-                .SetAssemblyVersion(version)
+                //.SetAssemblyVersion(version)
                 .SetFileVersion(version)
                 .SetVersion(version)
                 .EnableNoRestore());
