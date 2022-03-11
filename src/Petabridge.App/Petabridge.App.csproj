@@ -7,13 +7,6 @@
     <OutputType>Exe</OutputType>
   </PropertyGroup>
 
-
-  <ItemGroup>
-	<None Include="..\..\README.md" Pack="true" PackagePath="\" />
-    <None Remove="app.conf" />
-  </ItemGroup>
-
-
   <ItemGroup>
     <Content Include="app.conf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
