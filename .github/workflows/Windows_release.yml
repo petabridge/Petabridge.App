@@ -48,4 +48,5 @@ jobs:
         run: ./build.cmd NuGet
         env:
           Nuget_Key: ${{ secrets.NUGET_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_CONTEXT: ${{ toJSON(github) }}
