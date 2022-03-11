@@ -18,8 +18,8 @@ name: windows_release
 
 on:
   push:
-    branches:
-      - 'refs/tags/*'
+    tags:
+      - '*'
 
 jobs:
   windows-latest:
