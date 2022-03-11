@@ -16,7 +16,6 @@ using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using static Nuke.Common.Tools.DocFX.DocFXTasks;
 using System.Text.Json;
 using System.IO;
-using static Nuke.Common.Tools.Git.GitTasks;
 using static Nuke.Common.ChangeLog.ChangelogTasks;
 using Nuke.Common.ChangeLog;
 using System.Collections.Generic;
@@ -56,21 +55,11 @@ partial class Build : NukeBuild
 
     [Parameter] string DockerRegistryUrl;
 
-    // Metadata used when signing packages and DLLs
-    [Parameter] string SigningName = "My Library";
-    [Parameter] string SigningDescription = "My REALLY COOL Library";
-    [Parameter] string SigningUrl = "https://signing.is.cool/";
-
 
     [Parameter] [Secret] string DockerUsername;
     [Parameter] [Secret] string DockerPassword;
 
-    [Parameter] [Secret] string SignClientSecret;
-    [Parameter] [Secret] string SignClientUser;
-
     [Parameter] int Port = 8090;
-    // Directories
-    AbsolutePath ToolsDir => RootDirectory / "tools";
     AbsolutePath Output => RootDirectory / "bin";
     AbsolutePath OutputNuget => Output / "nuget";
     AbsolutePath OutputTests => RootDirectory / "TestResults";
