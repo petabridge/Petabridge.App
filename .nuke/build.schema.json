@@ -29,6 +29,10 @@
           "type": "string",
           "default": "Secrets must be entered via 'nuke :secret [profile]'"
         },
+        "GitHubToken": {
+          "type": "string",
+          "default": "Secrets must be entered via 'nuke :secret [profile]'"
+        },
         "Help": {
           "type": "boolean",
           "description": "Shows the help text for this build assembly"
@@ -114,6 +118,7 @@
             "enum": [
               "All",
               "AssemblyInfo",
+              "AuthenticatedGitHubClient",
               "BuildDockerImages",
               "BuildRelease",
               "Clean",
@@ -124,6 +129,7 @@
               "DockerLogin",
               "DocsInit",
               "DocsMetadata",
+              "GitHubRelease",
               "Install",
               "NBench",
               "Nuget",
@@ -148,6 +154,7 @@
             "enum": [
               "All",
               "AssemblyInfo",
+              "AuthenticatedGitHubClient",
               "BuildDockerImages",
               "BuildRelease",
               "Clean",
@@ -158,6 +165,7 @@
               "DockerLogin",
               "DocsInit",
               "DocsMetadata",
+              "GitHubRelease",
               "Install",
               "NBench",
               "Nuget",
