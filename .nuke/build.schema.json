@@ -93,23 +93,6 @@
           "type": "string",
           "description": "Root directory during build execution"
         },
-        "SignClientSecret": {
-          "type": "string",
-          "default": "Secrets must be entered via 'nuke :secret [profile]'"
-        },
-        "SignClientUser": {
-          "type": "string",
-          "default": "Secrets must be entered via 'nuke :secret [profile]'"
-        },
-        "SigningDescription": {
-          "type": "string"
-        },
-        "SigningName": {
-          "type": "string"
-        },
-        "SigningUrl": {
-          "type": "string"
-        },
         "Skip": {
           "type": "array",
           "description": "List of targets to be skipped. Empty list skips all dependencies",
