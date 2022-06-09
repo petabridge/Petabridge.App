@@ -1,6 +1,4 @@
-﻿namespace Petabridge.App;
-
-/// <summary>
+﻿/// <summary>
 /// To be parsed from appsettings.json or environment variables
 /// </summary>
 public class AkkaClusterConfig
