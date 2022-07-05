@@ -16,8 +16,7 @@ using Nuke.Common.Utilities;
     OnPushBranches = new[] { "master", "dev" },
     OnPullRequestBranches = new[] { "master", "dev" },
     InvokedTargets = new[] { nameof(All) },
-    PublishArtifacts = true,
-    EnableGitHubContext = true)
+    PublishArtifacts = true)
 ]
 
 [CustomGitHubActions("docker_build",
@@ -26,17 +25,15 @@ using Nuke.Common.Utilities;
     OnPushBranches = new[] { "master", "dev" },
     OnPullRequestBranches = new[] { "master", "dev" },
     InvokedTargets = new[] { nameof(Docker) },
-    PublishArtifacts = true,
-    EnableGitHubContext = true)
+    PublishArtifacts = true)
 ]
 [CustomGitHubActions("windows_release",
     GitHubActionsImage.WindowsLatest,
     OnPushTags = new[] { "*" },   
     AutoGenerate = false,
     InvokedTargets = new[] { nameof(NuGet) },
-    ImportSecrets = new[] { "Nuget_Key", "GITHUB_TOKEN" },
-    PublishArtifacts = true,
-    EnableGitHubContext = true)
+    ImportSecrets = new[] { "Nuget_Key"},
+    PublishArtifacts = true)
 ]
 
 partial class Build
