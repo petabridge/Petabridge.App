@@ -32,7 +32,7 @@ using Nuke.Common.Utilities;
     OnPushTags = new[] { "*" },   
     AutoGenerate = false,
     InvokedTargets = new[] { nameof(NuGet) },
-    ImportSecrets = new[] { "Nuget_Key"},
+    ImportSecrets = new[] { "Nuget_Key", "GITHUB_TOKEN" },
     PublishArtifacts = true)
 ]
 
