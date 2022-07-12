@@ -24,6 +24,7 @@ using Nuke.Common.Tools.Docker;
 using Nuke.Common.Tools.SignClient;
 using Octokit;
 using Nuke.Common.Utilities;
+using Project = Nuke.Common.ProjectModel.Project;
 
 [CheckBuildProjectConfigurations]
 [ShutdownDotNetAfterServerBuild]
@@ -288,12 +289,22 @@ partial class Build : NukeBuild
                 Information($"  {releaseAsset.BrowserDownloadUrl}");
             }
         });
+        
     Target RunTests => _ => _
         .Description("Runs all the unit tests")
         .DependsOn(Compile)
         .Executes(() =>
         {
-            var projects = Solution.GetProjects("*.Tests");
+            IEnumerable<Project> GetProjects()
+            {
+                // if you need to filter tests by environment, do it here.
+                if(EnvironmentInfo.IsWin)
+                    return Solution.GetProjects("*.Tests");
+                else
+                    return Solution.GetProjects("*.Tests");
+            }
+
+            var projects = GetProjects();
             foreach (var project in projects)
             {
                 Information($"Running tests from {project}");
