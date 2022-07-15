@@ -29,8 +29,7 @@ You can update or add to what exist in `Build.CI.GitHubActions.cs` (`AutoGenerat
     InvokedTargets = new[] { nameof(Tests) },
     //causes the on push to not trigger - maybe path-ignore is the right approach!
     //OnPushExcludePaths = new[] { "docs/**/*", "package.json", "README.md" },
-    PublishArtifacts = false,
-    EnableGitHubContext = true)
+    PublishArtifacts = false)
 ]
 
 [CustomGitHubActions("Docker_build",
@@ -42,8 +41,7 @@ You can update or add to what exist in `Build.CI.GitHubActions.cs` (`AutoGenerat
     InvokedTargets = new[] { nameof(BuildImage) },
     ImportSecrets = new [] { "Docker_Username", "Docker_Password" },
     //causes the on push to not trigger - maybe path-ignore is the right approach!
-    //OnPushExcludePaths = new[] { "docs/**/*", "package.json", "README.md" },
-    EnableGitHubContext = true)
+    //OnPushExcludePaths = new[] { "docs/**/*", "package.json", "README.md" })
 ]
 [CustomGitHubActions("Windows_release",
     GitHubActionsImage.WindowsLatest,
@@ -53,8 +51,7 @@ You can update or add to what exist in `Build.CI.GitHubActions.cs` (`AutoGenerat
     InvokedTargets = new[] { nameof(BuildImage) },
     ImportSecrets = new[] { "Nuget_Key" },
     //causes the on push to not trigger - maybe path-ignore is the right approach!
-    //OnPushExcludePaths = new[] { "docs/**/*", "package.json", "README.md" },
-    EnableGitHubContext = true)
+    //OnPushExcludePaths = new[] { "docs/**/*", "package.json", "README.md" })
 ]
 
 ```
