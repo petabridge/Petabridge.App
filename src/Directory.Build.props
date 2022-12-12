@@ -21,7 +21,7 @@
     <XunitVersion>2.4.2</XunitVersion>
     <XunitRunnerVisualstudio>2.4.5</XunitRunnerVisualstudio>
     <TestSdkVersion>17.4.0</TestSdkVersion>
-    <AkkaVersion>1.4.46</AkkaVersion>
+    <AkkaVersion>1.4.47</AkkaVersion>
     <PbmVersion>1.2.0</PbmVersion>
     <AkkaHostingVersion>0.5.1</AkkaHostingVersion>
     <FluentAssertionsVersion>6.8.0</FluentAssertionsVersion>
