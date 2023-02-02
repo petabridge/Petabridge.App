@@ -20,6 +20,6 @@
   <PropertyGroup>
     <AkkaVersion>1.4.46</AkkaVersion>
     <PbmVersion>1.2.0</PbmVersion>
-    <MicrosoftExtensionsVersion>6.0.1</MicrosoftExtensionsVersion>
+    <MicrosoftExtensionsVersion>7.0.0</MicrosoftExtensionsVersion>
   </PropertyGroup>
 </Project>
