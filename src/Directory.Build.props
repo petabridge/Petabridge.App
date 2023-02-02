@@ -24,7 +24,7 @@
     <AkkaVersion>1.4.46</AkkaVersion>
     <PbmVersion>1.2.0</PbmVersion>
     <AkkaHostingVersion>0.5.1</AkkaHostingVersion>
-    <FluentAssertionsVersion>6.8.0</FluentAssertionsVersion>
+    <FluentAssertionsVersion>6.9.0</FluentAssertionsVersion>
     <MicrosoftExtensionsVersion>6.0.1</MicrosoftExtensionsVersion>
   </PropertyGroup>
 </Project>
