@@ -18,7 +18,7 @@ var host = new HostBuilder()
     .ConfigureHostConfiguration(builder =>
         builder.AddEnvironmentVariables()
             .AddJsonFile("appsettings.json")
-            .AddJsonFile($"appsettings.{environment}.json"))
+            .AddJsonFile($"appsettings.{environment}.json", optional:true))
     .ConfigureServices((hostContext, services) =>
     {
         var akkaConfig = hostContext.Configuration.GetRequiredSection(nameof(AkkaClusterConfig))
@@ -27,12 +27,12 @@ var host = new HostBuilder()
         services.AddAkka(akkaConfig.ActorSystemName, (builder, provider) =>
         {
             Debug.Assert(akkaConfig.Port != null, "akkaConfig.Port != null");
-            builder.AddHoconFile("app.conf")
+            builder.AddHoconFile("app.conf", HoconAddMode.Prepend)
                 .WithRemoting(akkaConfig.Hostname, akkaConfig.Port.Value)
                 .WithClustering(new ClusterOptions()
                 {
-                    Roles = akkaConfig.Roles?.ToArray() ?? Array.Empty<string>(),
-                    SeedNodes = akkaConfig.SeedNodes?.Select(Address.Parse).ToArray() ?? Array.Empty<Address>()
+                    Roles = akkaConfig.Roles,
+                    SeedNodes = akkaConfig.SeedNodes
                 })
                 .AddPetabridgeCmd(cmd =>
                 {
