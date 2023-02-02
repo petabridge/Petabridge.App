@@ -1,6 +1,6 @@
 ﻿<Project>
   <PropertyGroup>
-    <Copyright>Copyright © 2022 Your Company</Copyright>
+    <Copyright>Copyright © 2023 Your Company</Copyright>
     <Authors>Your Authors</Authors>
     <VersionPrefix>0.1.0</VersionPrefix>
     <PackageReleaseNotes>• First release</PackageReleaseNotes>
@@ -12,12 +12,12 @@
     </PackageLicenseUrl>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
+
 	<ItemGroup>
 		<None Include="$(MSBuildThisFileDirectory)\..\README.md" Pack="true" Visible="false" PackagePath="\" />
 	</ItemGroup>
+  
   <PropertyGroup>
-    <NetCoreFramework>net6.0</NetCoreFramework>
-    <NBenchVersion>1.2.2</NBenchVersion>
     <XunitVersion>2.4.2</XunitVersion>
     <XunitRunnerVisualstudio>2.4.5</XunitRunnerVisualstudio>
     <TestSdkVersion>17.4.0</TestSdkVersion>

@@ -1,0 +1,24 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+
+  <!-- App dependencies -->
+  <ItemGroup>
+    <PackageVersion Include="Akka.Cluster.Hosting" Version="$(AkkaHostingVersion)" />
+    <PackageVersion Include="Petabridge.Cmd.Cluster.Sharding" Version="$(PbmVersion)" />
+    <PackageVersion Include="Petabridge.Cmd.Cluster" Version="$(PbmVersion)" />
+    <PackageVersion Include="Petabridge.Cmd.Remote" Version="$(PbmVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="$(MicrosoftExtensionsVersion)" />
+  </ItemGroup>
+
+  <!-- Test dependencies -->
+  <ItemGroup>
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="$(TestSdkVersion)" />
+    <PackageVersion Include="xunit" Version="$(XunitVersion)" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="$(XunitRunnerVisualstudio)" />
+    <PackageVersion Include="Akka.TestKit.XUnit2" Version="$(AkkaVersion)" />
+    <PackageVersion Include="FluentAssertions" Version="$(FluentAssertionsVersion)" />
+  </ItemGroup>
+
+</Project>
