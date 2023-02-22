@@ -114,7 +114,7 @@ partial class Build : NukeBuild
                 .SetProjectFile(Solution));
         });
 
-    Target CreateNuget => _ => _
+    Target CreateNuGet => _ => _
       .Description("Creates nuget packages")
       .DependsOn(RunTests)
       .Executes(() =>
@@ -203,10 +203,10 @@ partial class Build : NukeBuild
     public Target PublishDockerImages => _ => _
     .DependsOn(DockerLogin, Docker, PushImage);
 
-    Target PublishNuget => _ => _
+    Target PublishNuGet => _ => _
     .Unlisted()
     .Description("Publishes .nuget packages to Nuget")
-    .After(CreateNuget)
+    .After(CreateNuGet)
     .OnlyWhenDynamic(() => !NugetPublishUrl.IsNullOrEmpty())
     .OnlyWhenDynamic(() => !NugetKey.IsNullOrEmpty())
     .Executes(async() =>
@@ -324,7 +324,7 @@ partial class Build : NukeBuild
         });
 
     Target Nuget => _ => _
-        .DependsOn(CreateNuget, PublishNuget);
+        .DependsOn(CreateNuGet, PublishNuGet);
     private AbsolutePath[] GetDockerProjects()
     {
         return SourceDirectory.GlobFiles("**/Dockerfile")// folders with Dockerfiles in it
