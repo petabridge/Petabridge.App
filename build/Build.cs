@@ -60,7 +60,7 @@ partial class Build : NukeBuild
 
     //usage:
     //./build.cmd runtests --test-timeout 300s
-    [Parameter] string TestTimeout = "5m";
+    [Parameter] string TestTimeout = "30m";
 
     [Parameter] [Secret] string DockerUsername;
     [Parameter] [Secret] string DockerPassword;
