@@ -18,7 +18,7 @@
 	</ItemGroup>
   
   <PropertyGroup>
-    <AkkaVersion>1.4.49</AkkaVersion>
+    <AkkaVersion>1.5.1</AkkaVersion>
     <PbmVersion>1.2.2</PbmVersion>
     <MicrosoftExtensionsVersion>7.0.1</MicrosoftExtensionsVersion>
   </PropertyGroup>
