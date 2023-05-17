@@ -58,6 +58,9 @@ partial class Build : NukeBuild
 
     [Parameter] string DockerRegistryUrl;
 
+    //usage:
+    //./build.cmd runtests --test-timeout 300s
+    [Parameter] string TestTimeout = "30m";
 
     [Parameter] [Secret] string DockerUsername;
     [Parameter] [Secret] string DockerPassword;
@@ -77,7 +80,10 @@ partial class Build : NukeBuild
     GitHubActions GitHubActions => GitHubActions.Instance;
     private long BuildNumber()
     {
-        return GitHubActions.RunNumber;
+        if (GitHubActions != null!)
+            return GitHubActions.RunNumber;
+
+        return 0;
     }
     private string PreReleaseVersionSuffix()
     {
@@ -111,14 +117,14 @@ partial class Build : NukeBuild
                 .SetProjectFile(Solution));
         });
 
-    Target CreateNuget => _ => _
+    Target CreateNuGet => _ => _
       .Description("Creates nuget packages")
       .DependsOn(RunTests)
       .Executes(() =>
       {
-          var version = ReleaseNotes.Version.ToString();
+          var version = Version(ReleaseNotes, NugetPrerelease);
           var releaseNotes = GetNuGetReleaseNotes(ChangelogFile, GitRepository);
-
+          var versionSuffix = VersionSuffix;
           var projects = SourceDirectory.GlobFiles("**/*.csproj")
           .Except(SourceDirectory.GlobFiles("**/*Tests.csproj", "**/*Tests*.csproj"));
           foreach (var project in projects)
@@ -200,10 +206,10 @@ partial class Build : NukeBuild
     public Target PublishDockerImages => _ => _
     .DependsOn(DockerLogin, Docker, PushImage);
 
-    Target PublishNuget => _ => _
+    Target PublishNuGet => _ => _
     .Unlisted()
     .Description("Publishes .nuget packages to Nuget")
-    .After(CreateNuget)
+    .After(CreateNuGet)
     .OnlyWhenDynamic(() => !NugetPublishUrl.IsNullOrEmpty())
     .OnlyWhenDynamic(() => !NugetKey.IsNullOrEmpty())
     .Executes(async() =>
@@ -314,6 +320,9 @@ partial class Build : NukeBuild
                            .SetResultsDirectory(OutputTests)
                            .SetProcessWorkingDirectory(Directory.GetParent(project).FullName)
                            .SetLoggers("trx")
+                           .SetBlameCrash(true)
+                           .SetBlameHang(true)
+                           .SetBlameHangTimeout(TestTimeout)
                            .SetVerbosity(verbosity: DotNetVerbosity.Normal)
                            .EnableNoBuild());
                 }
@@ -321,7 +330,7 @@ partial class Build : NukeBuild
         });
 
     Target Nuget => _ => _
-        .DependsOn(CreateNuget, PublishNuget);
+        .DependsOn(CreateNuGet, PublishNuGet);
     private AbsolutePath[] GetDockerProjects()
     {
         return SourceDirectory.GlobFiles("**/Dockerfile")// folders with Dockerfiles in it
@@ -435,5 +444,11 @@ partial class Build : NukeBuild
     static void Information(string info)
     {
         Serilog.Log.Information(info);
+    }
+    static string Version(ReleaseNotes releaseNotes, string nugetPrerelease)
+    {
+        var version = releaseNotes.Version.ToString();
+        version = nugetPrerelease == "dev" ? version.Split('-')[0] : version;
+        return version;
     }
 }
